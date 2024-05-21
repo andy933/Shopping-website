@@ -7,6 +7,35 @@ import { ImEyeBlocked } from "react-icons/im"
 
 const Login = () => {
     const [displayPw, setDisplayPw] = useState(false)
+    const [account, setAccount] = useState({
+        email: '',
+        password: ''
+    })
+
+    const handleEmailChange = (event) => {
+        setAccount(before => {
+            return {
+                email: event.target.value,
+                password: before.password
+            }
+        })
+    }
+
+    const handlePasswordChange = (event) => {
+        setAccount(before => {
+            return {
+                email:  before.email,
+                password: event.target.value
+            }
+        })
+    }
+
+    const handleLogin = (event) => {
+        event.preventDefault()
+    }
+
+    console.log('User login details', account)
+
   return (
     <section id='login'>
         <div className='mx-auto container p-4'>
@@ -15,17 +44,27 @@ const Login = () => {
                 <div className='w-2/5 h-15 mx-auto'>
                     <img src={loginIcons} alt='login icons'/>
                 </div>
-                <form className='pt-8'>
+                <form className='pt-8 flex flex-col gap-5' onSubmit={handleLogin}>
                     <div className='grid'>
                         <label>Email: </label>
                         <div className='bg-slate-100 p-2'>
-                            <input type='email' placeholder='enter your email' className='w-full h-full outline-none bg-transparent'/>
+                            <input type='email' 
+                            name='email'
+                            value={account.email}
+                            placeholder='enter your email' 
+                            className='w-full h-full outline-none bg-transparent'
+                            onChange={handleEmailChange}/>
                         </div>
                     </div>
                     <div>
                         <label>Password: </label>
                         <div className='bg-slate-100 p-2 flex'>
-                            <input type={displayPw ? 'text' : 'password'} placeholder='enter your password' className='w-full h-full outline-none bg-transparent'/>
+                            <input type={displayPw ? 'text' : 'password'} 
+                            name='password'
+                            value={account.password}
+                            placeholder='enter your password' 
+                            className='w-full h-full outline-none bg-transparent'
+                            onChange={handlePasswordChange}/>
                             <div className='cursor-pointer text-xl' onClick={() => setDisplayPw( pw => !pw )}>
                                 <span>
                                     {
